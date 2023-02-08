@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List des patients</title>
+</head>
+
+<body>
+
+    <table>
+        <thead>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Sex</th>
+        </thead>
+        <tbody>
+            <% patient.forEach(p=> { %>
+                <form action="/patient/delete_patient" method="POST">
+                    <tr>
+                        <td>
+                            <%= p.nom %>
+                        </td>
+                        <td>
+                            <%= p.prenom %>
+                        </td>
+                        <td>
+                            <%= p.sex %>
+                        </td>
+
+                        <td>
+                            <input type="hidden" value="<%= p.id_p %>" name="id_p">
+                            <button>Delete Patient</button>
+                        </td>
+                    </tr>
+                </form>
+                <% }); %>
+        </tbody>
+
+    </table>
+
+    <hr>
+
+    <form action="/patient/add_patient" method="POST">
+        <div>
+            <label for="lastname">Nom</label>
+            <input type="text" id="lastname" name="lastname" required>
+        </div>
+        <div>
+            <label for="firstname">Prenom</label>
+            <input type="text" id="firstname" name="firstname" required>
+        </div>
+
+        <div>
+            <select name="sex" id="sex">
+                <option value="homme">Homme</option>
+                <option value="Femme">Femme</option>
+            </select>
+        </div>
+
+        <button>Ajouter patient</button>
+    </form>
+
+    <form action="/patient/delete_all" method="POST">
+        <button>Supprimer tous les clients</button>
+    </form>
+
+</body>
+
+</html>
