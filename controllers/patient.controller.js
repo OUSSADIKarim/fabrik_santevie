@@ -1,29 +1,68 @@
-import Patient from "../models/patient.js";
+import Patient from "../models/patient_model.js";
 
-export const findAll = (req, res) => {
-  Patient.findAll((err, patient) => {
-    if (err) {
-      res.send(err);
-    }
-    res.render("patient", { patient });
-  });
+export const getAllPatients = async (req, res) => {
+  const patients = await Patient.getAllPatients();
+  res.render("patient", { patients });
 };
 
-export const addPatient = (req, res) => {
-  const lastname = req.body.lastname;
-  const firstname = req.body.firstname;
-  const sex = req.body.sex;
-  Patient.addPatient(lastname, firstname, sex);
-  res.redirect("/patient");
+export const getPatient = async (req, res) => {
+  const id_p = req.params.id_p;
+  const patient = await Patient.getPatient(id_p);
+
+  res.send(patient);
 };
 
-export const deleteAll = (req, res) => {
-  Patient.deleteAll();
-  res.redirect("/patient");
+export const getPatientCount = async (req, res) => {
+  const patientCount = await Patient.getPatientCount();
+
+  res.send(patientCount);
 };
 
-export const deletePatient = (req, res) => {
+export const getPatientsCountPerAge = async (req, res) => {
+  const patientsCountPerAge = await Patient.getPatientsCountPerAge();
+
+  res.send(patientsCountPerAge);
+};
+
+export const getPatientSex = async (req, res) => {
+  const homme = await Patient.getPatientHomme();
+  const femme = await Patient.getPatientFemme();
+
+  res.send([homme, femme]);
+};
+
+export const updatePatient = async (req, res) => {
   const id_p = req.body.id_p;
-  Patient.deletePatient(id_p);
+  const nom = req.body.nom;
+  const prenom = req.body.prenom;
+  const age = req.body.age;
+  const sex = req.body.sex;
+
+  await Patient.updatePatient(nom, prenom, age, sex, id_p);
+  res.redirect("/patient");
+};
+
+export const createPatient = async (req, res) => {
+  const nom = req.body.nom;
+  const prenom = req.body.prenom;
+  const age = req.body.age;
+  const sex = req.body.sex;
+
+  await Patient.createPatient(nom, prenom, age, sex);
+
+  res.redirect("/patient");
+};
+
+export const deleteAllPatients = async (req, res) => {
+  await Patient.deleteAllPatients();
+
+  res.redirect("/patient");
+};
+
+export const deletePatient = async (req, res) => {
+  const id_p = req.body.id_p;
+
+  await Patient.deletePatient(id_p);
+
   res.redirect("/patient");
 };

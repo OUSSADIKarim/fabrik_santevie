@@ -5,67 +5,119 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- cdn font awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/index.js" defer></script>
     <title>List des patients</title>
 </head>
 
-<body>
+<body class="body-patient">
 
-    <table>
-        <thead>
-            <th>Nom</th>
-            <th>Prenom</th>
-            <th>Sex</th>
-        </thead>
-        <tbody>
-            <% patient.forEach(p=> { %>
-                <form action="/patient/delete_patient" method="POST">
-                    <tr>
-                        <td>
-                            <%= p.nom %>
-                        </td>
-                        <td>
-                            <%= p.prenom %>
-                        </td>
-                        <td>
-                            <%= p.sex %>
-                        </td>
+    <%- include("partials/header.ejs") %>
 
-                        <td>
-                            <input type="hidden" value="<%= p.id_p %>" name="id_p">
-                            <button>Delete Patient</button>
-                        </td>
-                    </tr>
+
+        <main class="main-patient">
+            <table class="paleBlueRows">
+                <h2 style="margin-bottom: 2rem; color: aquamarine;">List des patients</h2>
+                <thead>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                </thead>
+                <tbody>
+                    <% patients.forEach(patient=> { %>
+                        <tr>
+                            <form action="/patient/delete_patient" method="POST">
+                                <td>
+                                    <%= patient.nom %>
+                                </td>
+
+                                <td>
+                                    <%= patient.prenom %>
+                                </td>
+
+                                <td>
+                                    <%= patient.age %>
+                                </td>
+
+                                <td>
+                                    <%= patient.sex %>
+                                </td>
+
+                                <td>
+                                    <input id="input-id_p" type="hidden" name="id_p" value="<%= patient.id_p %>">
+                                    <button data-delete="true"><i class="fa-solid fa-trash-arrow-up"></i></button>
+                                </td>
+                            </form>
+                            <td><button class="btn-edit"><i class="fa-solid fa-pen-to-square"></i></button></td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+
+            <div class="form-edit">
+                <form action="/patient/edit" method="POST">
+                    <div>
+                        <label for="lastname">Nom</label>
+                        <input type="text" id="lastname" name="nom" required>
+                    </div>
+                    <div>
+                        <label for="firstname">Prenom</label>
+                        <input type="text" id="firstname" name="prenom" required>
+                    </div>
+
+                    <div>
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" min="0" required>
+                    </div>
+
+                    <div>
+                        <select name="sex" id="sex">
+                            <option value="homme">Homme</option>
+                            <option value="Femme">Femme</option>
+                        </select>
+                    </div>
+                    <input id="input-edit_id" type="hidden" name="id_p">
+                    <button>Confirmer</button>
+                    <button class="btn-quit">Quit</button>
                 </form>
-                <% }); %>
-        </tbody>
+            </div>
 
-    </table>
 
-    <hr>
 
-    <form action="/patient/add_patient" method="POST">
-        <div>
-            <label for="lastname">Nom</label>
-            <input type="text" id="lastname" name="lastname" required>
-        </div>
-        <div>
-            <label for="firstname">Prenom</label>
-            <input type="text" id="firstname" name="firstname" required>
-        </div>
+            <form action="/patient/add_patient" method="POST">
+                <h2 style="margin-bottom: 2rem; color: aquamarine;">Ajouter un patient</h2>
+                <div>
+                    <label for="lastname">Nom</label>
+                    <input type="text" id="lastname" name="nom" required>
+                </div>
+                <div>
+                    <label for="firstname">Prenom</label>
+                    <input type="text" id="firstname" name="prenom" required>
+                </div>
+                <div>
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" min="0" required>
+                </div>
+                <div>
+                    <select name="sex" id="sex">
+                        <option value="homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                    </select>
+                </div>
 
-        <div>
-            <select name="sex" id="sex">
-                <option value="homme">Homme</option>
-                <option value="Femme">Femme</option>
-            </select>
-        </div>
+                <button>Ajouter patient</button>
+            </form>
+            <form class="form-delete-all-patient" action="/patient/delete_all" method="POST">
+                <button data-delete="true">Supprimer tous les clients</button>
+            </form>
 
-        <button>Ajouter patient</button>
-    </form>
-
-    <form action="/patient/delete_all" method="POST">
-        <button>Supprimer tous les clients</button>
-    </form>
+        </main>
 
 </body>
 

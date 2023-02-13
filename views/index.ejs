@@ -5,11 +5,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0%22%3E%22%3E"></script> -->
+
+    <script src="/js/index.js" defer></script>
     <title>Document</title>
 </head>
 
 <body>
-    <a href="/patient">list des patients</a>
+    <%- include("partials/header.ejs") %>
+
+        <main class="main-dashboard">
+            <h2 style="text-align: center;">Nombre de patients totale: <br><span id="patient_count"
+                    style="color: aquamarine;"></span></h2>
+
+            <div class="all-charts-container">
+                <div class="chart-container">
+                    <canvas id="chart-canvas_sex"></canvas>
+                    <p>Nombre de patients totale par genre</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="chart-canvas_age"></canvas>
+                    <p>Nombre de patients totale par age</p>
+                </div>
+            </div>
+        </main>
 </body>
 
 </html>

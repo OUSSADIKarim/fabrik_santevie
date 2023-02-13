@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- cdn font awsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <script src="js/index.js" defer></script>
+    <title>Document</title>
+</head>
+
+<body class="body-rdv">
+
+    <%- include("partials/header.ejs") %>
+
+
+        <main class="main-rdv">
+            <table class="paleBlueRows">
+                <thead>
+                    <th>Patient</th>
+                    <th>Date</th>
+                </thead>
+
+                <tbody>
+                    <% rdvs.forEach(rdv=> { %>
+                        <tr>
+                            <form action="/calendar/delete_rdv" method="POST">
+                                <td>
+                                    <%= rdv.nom %>
+                                </td>
+                                <td>
+                                    <%= rdv.date_rdv.toLocaleDateString("en-US").replaceAll("/", "-" ) %>
+                                </td>
+                                <td>
+                                    <input type="hidden" name="id_rdv" value="<%= rdv.id_rdv %>">
+                                    <button data-delete="true"><i class="fa-solid fa-trash-arrow-up"></i></button>
+                                </td>
+                            </form>
+
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+
+
+
+            <hr>
+            <form action="/calendar/create_rdv" method="POST">
+                <select name="id_p" id="patient" required>
+                    <option value="" disabled selected>Select patient</option>
+                    <% patients.forEach(patient=> { %>
+                        <option value="<%= patient.id_p %>">
+                            <%= patient.nom + " " + patient.prenom%>
+                        </option>
+                        <% }); %>
+                </select>
+                <input type="date" name="date_rdv" data-date-inline-picker="true" min="<%= Date() %>" required>
+
+                <button>Create rdv</button>
+            </form>
+        </main>
+
+</body>
+
+</html>
