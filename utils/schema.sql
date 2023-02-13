@@ -15,9 +15,9 @@ VALUES
     ('NOM2', 'PRENOM2', 'FEMME');
 
 CREATE TABLE rdv (
-    id_rdv INTEGER, //auto ??????
+    id_rdv INTEGER AUTO_INCREMENT, 
     id_p INTEGER,
     date_rdv DATE NOT NULL,
     PRIMARY KEY (id_rdv),
-    FOREIGN KEY (id_p) REFERENCES patient(id_p)
+    FOREIGN KEY (id_p) REFERENCES patient(id_p) ON DELETE CASCADE ON UPDATE CASCADE
 );
